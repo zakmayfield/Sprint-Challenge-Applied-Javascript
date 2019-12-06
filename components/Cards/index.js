@@ -17,3 +17,78 @@
 // </div>
 //
 // Create a card for each of the articles and add the card to the DOM.
+
+
+
+
+//card components
+
+//=====find out where this is being appended=====
+
+const cardsContainer = document.querySelector('.cards-container')
+
+const cardCreator = (data) => {
+  //create elements
+  const card = document.createElement('div'), //n/a
+        headline = document.createElement('div'), //data.headline
+        author = document.createElement('div'), //n/a
+          imageContainer = document.createElement('div'), //n/a
+            image = document.createElement('img'), //data.authorPhoto
+          name = document.createElement('span'); //data.authorName
+  
+  //classes and attrs
+  card.classList.add('card');
+  headline.classList.add('headline');
+  author.classList.add('author');
+  imageContainer.classList.add('img-container');
+  image.src = data.authorPhoto;
+  
+  //text content
+  headline.textContent = data.headline;
+  name.textContent = data.authorName;
+  
+  //appending
+  card.appendChild(headline);
+  card.appendChild(author);
+  author.appendChild(imageContainer);
+  imageContainer.appendChild(image);
+  author.appendChild(name);
+  
+  return card;
+};
+
+axios.get('https://lambda-times-backend.herokuapp.com/articles')
+  .then(response => {
+
+    const articleArray = Object.values(response.data.articles);
+  
+    articleArray.forEach(item => {
+      item.forEach(subItem => {
+        const newArticle = cardCreator(subItem);
+        cardsContainer.appendChild(newArticle);
+      })
+    })
+
+
+    /*
+    response.data.articles.javascript.forEach(item => {
+      const newArticle = cardCreator(item);
+      cardsContainer.appendChild(newArticle);
+    })
+    response.data.articles.jquery.forEach(item => {
+      const newArticle = cardCreator(item);
+      cardsContainer.appendChild(newArticle);
+    })
+    response.data.articles.node.forEach(item => {
+      const newArticle = cardCreator(item);
+      cardsContainer.appendChild(newArticle);
+    })
+    response.data.articles.technology.forEach(item => {
+      const newArticle = cardCreator(item);
+      cardsContainer.appendChild(newArticle);
+    })
+    */
+  })
+  .catch(err => {
+    console.log(`ERROR WITH CARDS HERE: ${err}`);
+  });
