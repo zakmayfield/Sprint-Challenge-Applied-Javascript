@@ -60,13 +60,10 @@ const cardCreator = (data) => {
 axios.get('https://lambda-times-backend.herokuapp.com/articles')
   .then(response => {
 
-    console.log(response)
-
     const articleArray = Object.values(response.data.articles);
   
     articleArray.forEach(item => {
       item.forEach(subItem => {
-        console.log(subItem)
         const newArticle = cardCreator(subItem);
         cardsContainer.appendChild(newArticle);
       })
