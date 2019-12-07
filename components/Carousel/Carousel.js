@@ -50,6 +50,7 @@ const carouselCreator = () => {
 
   //events for buttons
   let slideIndex = 0;
+  
 
   const showSlides = (n) => {
     slideIndex += n;
@@ -85,26 +86,33 @@ const carouselCreator = () => {
       imageTwo.style.display = 'none';
       imageThree.style.display = 'none';
     }
+
+    return carousel;
   }
 
   showSlides(1);
 
-  // const moveSlider = (cb, n) => {
-  //   let index = 1;
-  //   index += n;
-  //   showSlides(index);
-  // };
+  // leftButton.addEventListener('click', () => {
+  //   showSlides(-1);
+  // });
 
-  leftButton.addEventListener('click', () => {
+  leftButton.addEventListener('click',  () => {
     showSlides(-1);
+    
+    gsap.fromTo(carousel, 
+      {opacity: 0.5}, {opacity: 1, duration: 2});
   });
 
   rightButton.addEventListener('click', () => {
     showSlides(1);
+
+    gsap.fromTo(carousel, 
+      {opacity: 0.5}, {opacity: 1, duration: 2});
   });
 
   return carousel;
 };
+
 
 carouselCont.appendChild(carouselCreator());
 
